@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editkaro.in Portfolio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #0f0f0f;
+      color: #fff;
+    }
+    header {
+      text-align: center;
+      padding: 2rem;
+      background: linear-gradient(135deg, #ff0057, #ff7b00);
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.5rem;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin: 1rem 0;
+    }
+    nav button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 20px;
+      background: #222;
+      color: #fff;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    nav button:hover {
+      background: #ff0057;
+    }
+    .portfolio {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+    .card {
+      background: #1a1a1a;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+      transition: transform 0.3s;
+    }
+    .card:hover {
+      transform: scale(1.05);
+    }
+    .card iframe {
+      width: 100%;
+      height: 200px;
+      border: none;
+    }
+    .card h3 {
+      margin: 0;
+      padding: 1rem;
+      font-size: 1.2rem;
+      text-align: center;
+      background: #111;
+    }
+    @media(max-width: 600px) {
+      header h1 {
+        font-size: 1.8rem;
+      }
+      .card iframe {
+        height: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Editkaro.in Portfolio</h1>
+    <p>Social Media Marketing & Video Editing Agency</p>
+  </header>
+
+  <!-- Category Buttons -->
+  <nav>
+    <button onclick="filterSelection('all')">All</button>
+    <button onclick="filterSelection('short')">Short-form</button>
+    <button onclick="filterSelection('long')">Long-form</button>
+    <button onclick="filterSelection('gaming')">Gaming</button>
+    <button onclick="filterSelection('football')">Football Edits</button>
+    <button onclick="filterSelection('ads')">E-Commerce Ads</button>
+    <button onclick="filterSelection('doc')">Documentary</button>
+    <button onclick="filterSelection('color')">Color Grading</button>
+    <button onclick="filterSelection('anime')">Anime</button>
+  </nav>
+
+  <!-- Portfolio Section with Verified Embeddable Links -->
+  <section class="portfolio">
+    <div class="card short" data-link="https://www.youtube.com/watch?v=5O0YDHiosD0">
+      <h3>Short-form Video</h3>
+    </div>
+    <div class="card long" data-link="https://www.youtube.com/watch?v=aqz-KE-bpKQ">
+      <h3>Long-form Video</h3>
+    </div>
+    <div class="card gaming" data-link="https://www.youtube.com/watch?v=ZggspAgMsyE">
+      <h3>Gaming Video</h3>
+    </div>
+    <div class="card football" data-link="https://www.youtube.com/watch?v=6Af6b_wyiwI">
+      <h3>Football Edit</h3>
+    </div>
+    <div class="card ads" data-link="https://www.youtube.com/watch?v=9bZkp7q19f0">
+      <h3>E-commerce Ad</h3>
+    </div>
+    <div class="card doc" data-link="https://www.youtube.com/watch?v=LuKAeNC8e3c">
+      <h3>Documentary</h3>
+    </div>
+    <div class="card color" data-link="https://www.youtube.com/watch?v=ScMzIvxBSi4">
+      <h3>Color Grading</h3>
+    </div>
+    <div class="card anime" data-link="https://www.youtube.com/watch?v=VDVuoAseokI">
+      <h3>Anime Video</h3>
+    </div>
+  </section>
+
+  <script>
+    // Convert YouTube URL to embed link
+    function convertToEmbed(url) {
+      let videoId = "";
+      if (url.includes("watch?v=")) {
+        videoId = url.split("watch?v=")[1].split("&")[0];
+      } else if (url.includes("youtu.be/")) {
+        videoId = url.split("youtu.be/")[1].split("?")[0];
+      }
+      return "https://www.youtube.com/embed/" + videoId;
+    }
+
+    // Insert iframe with embed URL into each card
+    document.querySelectorAll(".card").forEach(card => {
+      const link = card.getAttribute("data-link");
+      if (link) {
+        const iframe = document.createElement("iframe");
+        iframe.src = convertToEmbed(link);
+        iframe.allowFullscreen = true;
+        card.insertBefore(iframe, card.firstChild);
+      }
+    });
+
+    // Filtering logic
+    function filterSelection(category) {
+      const cards = document.getElementsByClassName("card");
+      if (category === "all") category = "";
+      for (let card of cards) {
+        card.style.display = (!category || card.classList.contains(category)) ? "block" : "none";
+      }
+    }
+    filterSelection('all');
+  </script>
+</body>
+</html>
